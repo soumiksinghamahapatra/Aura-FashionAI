@@ -1,7 +1,7 @@
 {
-  "name": "minniie-backend",
+  "name": "aura-fashion-ai",
   "version": "1.0.0",
-  "description": "Full backend and database for minniie AI Personal Stylist",
+  "description": "Full backend and database for Aura AI Personal Stylist",
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",

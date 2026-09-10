@@ -1,25 +1,67 @@
-# minniie – AI Personal Stylist (Fullstack)
+# Aura – AI Personal Stylist (Fullstack)
 
-This repository contains the complete frontend, backend server, database, and AI stylist services for **minniie** (AI Personal Stylist for Outfits & Color Analysis).
+This repository contains the complete frontend, backend server, database, and AI stylist services for **Aura** (AI Personal Stylist for Outfits & Color Analysis).
 
 ---
 
-## Quick Start
+## Running Options
 
-### 1. Install Dependencies
+You can run Aura **with Docker** or **without Docker** (Node.js).
+
+### Option A: Without Docker (Simplest & Direct)
+
+#### 1. Windows (1-Click)
+Simply double-click:
+```
+start.bat
+```
+*(Automatically checks Node.js, installs packages if needed, launches the server, and opens your browser to http://localhost:3000)*
+
+#### 2. Linux / macOS (1-Click)
 ```bash
+chmod +x start.sh
+./start.sh
+```
+
+#### 3. Via Terminal (Cross-Platform)
+```bash
+# 1. Install dependencies
 npm install
-```
 
-### 2. Start the Server
-```bash
+# 2. Start server
 npm start
-```
 
-### 3. Open in Browser
+# For auto-reloading during development:
+npm run dev
+```
 Navigate to:
 ```
 http://localhost:3000
+```
+
+#### 4. Production Process Manager (PM2 without Docker)
+If hosting on an Ubuntu/Debian VPS without Docker:
+```bash
+npm install -g pm2
+pm2 start server/index.js --name aura-app
+pm2 startup
+pm2 save
+```
+
+---
+
+### Option B: With Docker
+
+If you prefer containerized deployment:
+```bash
+# Build and run in background
+docker compose up -d --build
+
+# View logs
+docker compose logs -f
+
+# Stop container
+docker compose down
 ```
 
 ---
@@ -28,7 +70,7 @@ http://localhost:3000
 
 The database is pre-seeded with a Pro account ready to test immediately:
 
-- **Email**: `demo@minniie.com`
+- **Email**: `demo@aura.com`
 - **Password**: `Password123!`
 
 You can also click **Sign Up** on the website to register a brand new account.
