@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  aura-web:
+    build: .
+    container_name: aura-stylist
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - JWT_SECRET=change-this-to-a-secure-random-secret-key
+      - DB_PATH=/app/data/database.sqlite
+      # Optional AI Keys:
+      # - GEMINI_API_KEY=your_key_here
+      # - OPENAI_API_KEY=your_key_here
+    volumes:
+      - aura-db:/app/data
+      - aura-uploads:/app/uploads
+
+volumes:
+  aura-db:
+    driver: local
+  aura-uploads:
+    driver: local

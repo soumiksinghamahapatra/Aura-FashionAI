@@ -1,0 +1,16 @@
+{
+  "name": "Aura — AI Wardrobe Assistant",
+  "short_name": "Aura",
+  "description": "Upload your wardrobe, discover your color season from a selfie, and let AI match your clothes to looks you love.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ea2303",
+  "icons": [
+    {
+      "src": "./assets/minniie-logo-DiO-ofHI.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
