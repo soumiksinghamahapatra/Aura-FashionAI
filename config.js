@@ -1,4 +1,4 @@
-// minniie Runtime Configuration
+// Aura AI Stylist Runtime Configuration
 // In local production / development, all requests route to your local backend server.
 // To connect to a cloud Supabase project, replace window.__SUPABASE_URL__ and window.__SUPABASE_ANON_KEY__.
 
