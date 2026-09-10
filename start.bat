@@ -1,11 +1,11 @@
 @echo off
-title Aura - AI Personal Stylist
+title Aura - AI Personal Stylist (MERN Stack)
 echo ========================================================
-echo         Aura - AI Personal Stylist Server
+echo         Aura - AI Personal Stylist (MERN Stack)
 echo ========================================================
 echo.
 
-:: Check if Node.js is installed
+:: 1. Check Node.js
 where node >nul 2>nul
 if %ERRORLEVEL% neq 0 (
     echo [ERROR] Node.js is not installed or not found in PATH!
@@ -15,23 +15,38 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
-:: Install dependencies if node_modules is missing
+:: 2. Check root dependencies
 if not exist node_modules (
-    echo [1/2] Installing dependencies...
+    echo [1/3] Installing root orchestrator dependencies...
     call npm install
-    if %ERRORLEVEL% neq 0 (
-        echo [ERROR] npm install failed.
-        pause
-        exit /b 1
-    )
 )
 
-echo [2/2] Launching server on http://localhost:3000 ...
-echo Press Ctrl+C anytime to stop the server.
+:: 3. Check server dependencies
+if not exist server\node_modules (
+    echo [2/3] Installing backend dependencies (server/)...
+    cd server
+    call npm install
+    cd ..
+)
+
+:: 4. Check client dependencies
+if not exist client\node_modules (
+    echo [3/3] Installing frontend dependencies (client/)...
+    cd client
+    call npm install
+    cd ..
+)
+
+echo.
+echo Launching Aura Fullstack Development Servers...
+echo - Backend API:  http://localhost:5000
+echo - React Client: http://localhost:5173
+echo.
+echo Press Ctrl+C anytime to stop both servers.
 echo.
 
 :: Open browser
-start "" http://localhost:3000
+start "" http://localhost:5173
 
-:: Run the server
-npm start
+:: Start concurrently
+npm run dev

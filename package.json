@@ -1,20 +1,18 @@
 {
   "name": "aura-fashion-ai",
   "version": "1.0.0",
-  "description": "Full backend and database for Aura AI Personal Stylist",
-  "main": "server/index.js",
+  "description": "Aura AI Personal Stylist - Fullstack MERN Architecture (React.js, Node.js, Express, MongoDB)",
   "scripts": {
+    "install:all": "npm install && npm --prefix server install && npm --prefix client install",
+    "dev": "concurrently \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
     "start": "node server/index.js",
-    "dev": "node --watch server/index.js",
-    "seed": "node server/db/seed.js",
-    "test": "node scratch/verify_all.js && node scratch/test_user_journey.js"
+    "server": "npm --prefix server start",
+    "server:dev": "npm --prefix server run dev",
+    "client": "npm --prefix client run dev",
+    "client:build": "npm --prefix client run build",
+    "seed": "npm --prefix server run seed"
   },
-  "dependencies": {
-    "bcryptjs": "^3.0.3",
-    "cors": "^2.8.5",
-    "dotenv": "^17.3.1",
-    "express": "^4.21.2",
-    "jsonwebtoken": "^9.0.2",
-    "multer": "^1.4.5-lts.1"
+  "devDependencies": {
+    "concurrently": "^9.2.4"
   }
 }

@@ -1,142 +1,142 @@
-# Aura – AI Personal Stylist (Fullstack)
+# Aura – AI Personal Stylist (MERN Stack)
 
-This repository contains the complete frontend, backend server, database, and AI stylist services for **Aura** (AI Personal Stylist for Outfits & Color Analysis).
+Aura is a fullstack AI-powered personal stylist application built on the **MERN** stack (**M**ongoDB, **E**xpress, **R**eact.js, **N**ode.js).
+
+The repository is organized into distinct `client/` (Frontend) and `server/` (Backend) directories.
 
 ---
 
-## Running Options
+## Architecture Overview
 
-You can run Aura **with Docker** or **without Docker** (Node.js).
+```
+Aura-FashionAI/
+├── client/                     # React.js Frontend (Vite + TailwindCSS)
+│   ├── public/                 # Static assets & favicon
+│   ├── src/
+│   │   ├── components/         # Navbar, Footer, ColorPaletteCard, WardrobeItemCard, etc.
+│   │   ├── context/            # AuthContext (JWT session management)
+│   │   ├── pages/              # Home, Login, Register, Wardrobe, ColorAnalysis,
+│   │   │                       # StyleConsultant, OutfitStudio, OutfitAnalyzer, Pricing
+│   │   ├── services/           # Axios API client with Bearer interceptor
+│   │   ├── App.jsx             # React Router layout
+│   │   ├── main.jsx            # React root mount
+│   │   └── index.css           # Modern fashion luxury styling
+│   ├── index.html
+│   ├── vite.config.js          # API proxy (/api -> http://localhost:5000)
+│   └── package.json
+│
+├── server/                     # Node.js & Express REST Backend (MongoDB)
+│   ├── src/
+│   │   ├── config/             # Mongoose connection (db.js)
+│   │   ├── controllers/        # Auth, Wardrobe, Color, Consultation, Outfits, Subscription
+│   │   ├── middleware/         # JWT Protect, Multer File Uploads, Error Handling
+│   │   ├── models/             # User, WardrobeItem, ColorAnalysis, Outfit, Consultation
+│   │   ├── routes/             # Clean REST endpoints (/api/*)
+│   │   ├── services/           # 12-Season color engine & AI Stylist service
+│   │   └── seeder.js           # Seeds demo data
+│   ├── uploads/                # Stored user clothing and selfie photos
+│   ├── index.js                # Server entry point
+│   ├── .env                    # Environment configuration
+│   └── package.json
+│
+├── package.json                # Root orchestrator with concurrently
+├── start.bat                   # 1-Click launcher for Windows
+└── start.sh                    # 1-Click launcher for macOS / Linux
+```
 
-### Option A: Without Docker (Simplest & Direct)
+---
 
-#### 1. Windows (1-Click)
-Simply double-click:
+## Quick Start (Without Docker)
+
+### Option 1: 1-Click Launch (Windows)
+Double-click:
 ```
 start.bat
 ```
-*(Automatically checks Node.js, installs packages if needed, launches the server, and opens your browser to http://localhost:3000)*
+*(Automatically checks Node.js, installs dependencies in both client and server if needed, launches both development servers, and opens http://localhost:5173)*
 
-#### 2. Linux / macOS (1-Click)
+### Option 2: 1-Click Launch (macOS / Linux)
 ```bash
 chmod +x start.sh
 ./start.sh
 ```
 
-#### 3. Via Terminal (Cross-Platform)
+### Option 3: Terminal Command
 ```bash
-# 1. Install dependencies
-npm install
+# 1. Install all dependencies (root, server, and client)
+npm run install:all
 
-# 2. Start server
-npm start
-
-# For auto-reloading during development:
+# 2. Launch both client and server concurrently
 npm run dev
 ```
-Navigate to:
-```
-http://localhost:3000
-```
 
-#### 4. Production Process Manager (PM2 without Docker)
-If hosting on an Ubuntu/Debian VPS without Docker:
-```bash
-npm install -g pm2
-pm2 start server/index.js --name aura-app
-pm2 startup
-pm2 save
-```
+- **Frontend App**: [http://localhost:5173](http://localhost:5173)
+- **Backend API**: [http://localhost:5000](http://localhost:5000)
 
 ---
 
-### Option B: With Docker
+## Database Configuration (MongoDB)
 
-If you prefer containerized deployment:
-```bash
-# Build and run in background
-docker compose up -d --build
-
-# View logs
-docker compose logs -f
-
-# Stop container
-docker compose down
+In `server/.env`:
+```env
+MONGODB_URI=mongodb://127.0.0.1:27017/aura_fashion
+# Or use free MongoDB Atlas cloud URI:
+# MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/aura_fashion?retryWrites=true&w=majority
 ```
 
----
-
-## Pre-Configured Demo Account
-
-The database is pre-seeded with a Pro account ready to test immediately:
-
+### Pre-Seeded Demo Account
+To seed sample clothes, color analysis, and the demo user into MongoDB:
+```bash
+npm run seed
+```
+Demo Credentials:
 - **Email**: `demo@aura.com`
 - **Password**: `Password123!`
 
-You can also click **Sign Up** on the website to register a brand new account.
+---
+
+## Core Features
+
+1. **12-Season Color Analysis** (`/color-analysis`):
+   - Analyzes undertone (warm, cool, neutral) and contrast (low, medium, high).
+   - Generates signature power swatches, flattering neutrals, and metals.
+   - Allows exploring all 12 seasonal palettes.
+
+2. **Digital Wardrobe** (`/wardrobe`):
+   - Photo upload and automatic categorization (Tops, Bottoms, Shoes, Coats, Accessories).
+   - Real-time palette harmony evaluation (tells you how well each piece matches your color season).
+
+3. **AI Stylist Consultation** (`/consultation`):
+   - Conversational AI stylist ("Aura") giving outfit recommendations, layering tips, and style briefs.
+   - Interactive prompt chips.
+   - Optional live Gemini (`GEMINI_API_KEY`) or OpenAI (`OPENAI_API_KEY`) integration.
+
+4. **Mix-and-Match Outfit Studio** (`/studio`):
+   - Assemble full looks from your closet with real-time styling synergy rating.
+   - Save looks to your personal lookbook tagged by occasion.
+
+5. **Street Style & Pinterest Matcher** (`/analyzer`):
+   - Upload inspiration photos from Pinterest or street style.
+   - Identifies pieces in the look and shows what you already own vs what pieces are missing.
 
 ---
 
-## Features & Endpoints
+## REST API Reference
 
-### 1. Authentication (`/auth/v1/*`)
-- Fully compatible with `@supabase/supabase-js` Auth client.
-- Email & password registration and login with bcrypt hashing.
-- Anonymous guest try-on sessions.
-- JWT token issuing and automatic session refreshing.
-
-### 2. Database & PostgREST API (`/rest/v1/*`)
-- Built-in SQLite database (`database.sqlite`) using Node.js native `node:sqlite` engine (no external DB install or C++ compilation required).
-- Supports all 17 schema tables:
-  - `profiles`: User preferences, avatar, active color analysis.
-  - `wardrobe_items`: Digital closet clothes (categorized by tops, bottoms, shoes, etc.).
-  - `color_analyses`: 12-season color analysis, palette swatches, undertones, and wardrobe matches.
-  - `collages` & `collage_items`: Outfit collages and styling arrangements.
-  - `style_profiles`: AI Stylist chat consultations and custom style briefs.
-  - `subscribers` & `plan_limits`: Pro, Studio, and Free tier quotas.
-  - `outfit_analyses`, `inspiration_images`, `user_selfies`, `user_roles`, etc.
-
-### 3. Local Storage (`/storage/v1/*`)
-- Handles file uploads and static delivery for:
-  - `avatars`
-  - `wardrobe-images`
-  - `collage-assets`
-  - `marketing-public`
-- Files are stored in the local `/uploads` directory.
-
-### 4. AI & Edge Functions (`/functions/v1/*`)
-- **`style-consultation`**: Interactive AI Stylist consultation streaming Server-Sent Events (SSE) in OpenAI format, outputting style briefs and interactive chips (`<CHIPS>`, `<STYLE_BRIEF>`).
-- **`color-analysis`**: 12-season color analysis engine with palette generation.
-- **`evaluate-wardrobe-colors`**: Matches wardrobe items against the user's seasonal color palette.
-- **`categorize-item`**: Clothing auto-categorization (category, color, aesthetic style).
-- **`generate-collage` & `edit-collage`**: Outfit collage generator and conversational editor.
-- **`analyze-outfit`**: Pinterest and street look breakdown into matching/missing items.
-- **`search-products` & `search-product-image`**: Curated fashion shopping recommendations.
-- **`landing-tryon-pairs`**: Try-on showcase pairs and outfits for the homepage.
-- **`fetch-url-images` & `import-url-image`**: E-commerce URL product image extractor.
-
----
-
-## Cloud Deployment (Supabase / PostgreSQL)
-
-If you wish to deploy the database to Supabase Cloud:
-1. Create a project at [supabase.com](https://supabase.com).
-2. Open the **SQL Editor** in your Supabase dashboard.
-3. Paste and run the contents of [`server/db/schema.sql`](./server/db/schema.sql).
-4. Update `config.js` with your Supabase Project URL and Anon Key.
-
----
-
-## Optional: Live Gemini / OpenAI Integration
-
-By default, the server includes built-in intelligent fashion heuristic models so all features work immediately offline without API keys.
-
-To enable live Gemini or OpenAI models for real-time vision and streaming consultations:
-1. Open `.env`.
-2. Add your API key:
-   ```env
-   GEMINI_API_KEY=your_gemini_api_key_here
-   # or
-   OPENAI_API_KEY=your_openai_api_key_here
-   ```
-3. Restart the server (`npm start`).
+| Method | Endpoint | Description | Access |
+|---|---|---|---|
+| `POST` | `/api/auth/register` | Create user account | Public |
+| `POST` | `/api/auth/login` | Login & receive JWT | Public |
+| `GET` | `/api/auth/me` | Current user profile | Private |
+| `GET` | `/api/wardrobe` | List user's wardrobe items | Private |
+| `POST` | `/api/wardrobe` | Add wardrobe item (photo upload) | Private |
+| `DELETE` | `/api/wardrobe/:id` | Remove wardrobe item | Private |
+| `GET` | `/api/color-analysis` | Get active season analysis | Private |
+| `POST` | `/api/color-analysis` | Run 12-season analysis | Private |
+| `GET` | `/api/consultation` | Get AI chat session | Private |
+| `POST` | `/api/consultation/message` | Send message to AI Stylist | Private |
+| `GET` | `/api/outfits` | List saved outfits | Private |
+| `POST` | `/api/outfits` | Create outfit ensemble | Private |
+| `POST` | `/api/outfits/analyze-inspo` | Match inspiration image to closet | Private |
+| `GET` | `/api/subscription/plans` | List subscription plans | Public |
+| `POST` | `/api/subscription/upgrade` | Upgrade subscription plan | Private |
